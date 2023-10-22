@@ -144,9 +144,21 @@ int f8()
 	return 0;
 }
 
-int f9()
+int f9(int n)
 {
-	return 0;
+	int i = 31;
+	string binaryNumber;
+	int bitsCounter = 0;
+	while (i--)
+	{
+		binaryNumber += to_string((tabOfNumbers[0] >> i) & 1);
+	}
+	for (int i = 0; i < binaryNumber.size(); i++)
+	{
+		if (binaryNumber[i] == '1')
+			bitsCounter++;
+	}
+	return bitsCounter;
 }
 
 int main()
@@ -188,6 +200,11 @@ int main()
 		case 7:
 			readIntSequence(n);
 			f7(n);
+			break;
+		case 9:
+			readIntSequence(n);
+			cout << f9(n);
+			break;
 		}
 	};
 	return 0;
