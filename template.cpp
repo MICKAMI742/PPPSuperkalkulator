@@ -100,20 +100,53 @@ void f4(int n)
 	cout << endl;
 }
 
-string f5(int n)
+bool *f5(int n)
 {
-	int j = 2;
-	string returningString;
-	int m = 0;
-	int L = 4;
+	bool *tabOfBool = new bool(n);
+	// wypelnia pusta tablice wartosciami boolowymi, zeby zapobiec przed artefaktami w pamieci
 	for (int i = 0; i < n; i++)
 	{
-		for (int j = 2; j < sqrt(tabOfNumbers[i]); i++)
+		tabOfBool[i] = 0;
+	}
+	// petla sprawdzajaca czy liczba jest pierwsza
+	for (int i = 0; i < n; i++)
+	{
+		if (tabOfNumbers[i] == 2)
 		{
-			m = pow(2, tabOfNumbers[i]) - 1;
+			tabOfBool[i] = 1;
+			continue;
+		}
+
+		for (int j = 2; j <= sqrt(tabOfNumbers[i]); j++)
+		{
+			if (tabOfNumbers[i] % j == 0)
+			{
+				tabOfBool[i] = 0;
+			}
+			tabOfBool[i] = 1;
 		}
 	}
-	return returningString;
+	return tabOfBool;
+}
+
+int f6()
+{
+	return 0;
+}
+
+int f7(int n)
+{
+	return 0;
+}
+
+int f8()
+{
+	return 0;
+}
+
+int f9()
+{
+	return 0;
 }
 
 int main()
@@ -146,8 +179,15 @@ int main()
 			break;
 		case 5:
 			readIntSequence(n);
-			cout << f5(n);
+			for (int i = 0; i < n; i++)
+			{
+				bool *array = f5(n);
+				cout << array[i] << " ";
+			}
 			break;
+		case 7:
+			readIntSequence(n);
+			f7(n);
 		}
 	};
 	return 0;
