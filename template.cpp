@@ -134,14 +134,44 @@ int f6()
 	return 0;
 }
 
-int f7(int n)
+void f7(int n)
 {
-	return 0;
+	int a = tabOfNumbers[0];
+	int b = tabOfNumbers[1];
+	int c = tabOfNumbers[2];
+	int d = tabOfNumbers[3];
+	int firstX = 0;
+	int secondX = 0;
+	int delta = 0;
+	if (a == 0)
+	{
+		delta = pow(c, 2) - 4 * b * d; // obli5czam delte
+		if (delta > 0)
+		{
+			firstX = (-c + sqrt(delta)) / (2 * b);
+			secondX = (-c - sqrt(delta)) / (2 * b);
+			cout << firstX << endl;
+			cout << secondX << endl;
+		}
+		if (delta == 0)
+		{
+			firstX = -c / (2 * b);
+			cout << firstX << endl;
+		}
+	}
+	else
+	{
+	}
 }
 
-int f8()
+int f8(int n)
 {
-	return 0;
+	int result = 0;
+	for (int i = 1; i <= tabOfNumbers[n - 1]; i++)
+	{
+		result += i * pow(i + 1, 2);
+	}
+	return result;
 }
 
 int f9(int n)
@@ -151,10 +181,12 @@ int f9(int n)
 	int bitsCounter = 0;
 	while (i--)
 	{
+		// zamieniam liczbe int na liczbe w binarnym systemie i zapisuje jako string powstaly ciag
 		binaryNumber += to_string((tabOfNumbers[0] >> i) & 1);
 	}
 	for (int i = 0; i < binaryNumber.size(); i++)
 	{
+		// zliczam chary ktore sa jedynka
 		if (binaryNumber[i] == '1')
 			bitsCounter++;
 	}
@@ -179,11 +211,11 @@ int main()
 			break;
 		case 2:
 			readIntSequence(n);
-			cout << f2(n);
+			cout << f2(n) << endl;
 			break;
 		case 3:
 			readIntSequence(n);
-			cout << f3(n);
+			cout << f3(n) << endl;
 			break;
 		case 4:
 			readIntSequence(n);
@@ -196,14 +228,21 @@ int main()
 				bool *array = f5(n);
 				cout << array[i] << " ";
 			}
+			cout << endl;
+			break;
+		case 6:
 			break;
 		case 7:
 			readIntSequence(n);
 			f7(n);
 			break;
+		case 8:
+			readIntSequence(n);
+			cout << f8(n) << endl;
+			break;
 		case 9:
 			readIntSequence(n);
-			cout << f9(n);
+			cout << f9(n) << endl;
 			break;
 		}
 	};
