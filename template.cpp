@@ -5,6 +5,14 @@ using namespace std;
 // inicjacja zmiennej pod utworzenie dynamicznej tabliczy intow
 int *tabOfNumbers;
 
+// inicjacja struktury służącej do zadania 6
+struct points
+{
+	int x, y;
+};
+
+points *tabOfPoints;
+
 // funkcja inicjujaca wielkosc tablicy i wczytujaca do niej dane
 void readIntSequence(int n)
 {
@@ -12,6 +20,17 @@ void readIntSequence(int n)
 	for (int i = 0; i < n; i++)
 	{
 		cin >> tabOfNumbers[i];
+	}
+}
+
+// funkcja wczytujaca punkty do struktury
+void setPointsToStruct(int n)
+{
+	tabOfPoints = new points[n];
+	for (int i = 0; i < n; i++)
+	{
+		cin >> tabOfPoints[i].x;
+		cin >> tabOfPoints[i].y;
 	}
 }
 
@@ -129,9 +148,34 @@ bool *f5(int n)
 	return tabOfBool;
 }
 
-int f6()
+void f6(int n)
 {
-	return 0;
+	points triangles[n][3];
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			triangles[i][j].x = 0;
+			triangles[i][j].y = 0;
+		}
+	}
+	int k = 0;
+	for (int i = 1; i < n - 1; i++)
+	{
+		triangles[k][0] = tabOfPoints[0];
+		triangles[k][1] = tabOfPoints[i];
+		triangles[k][2] = tabOfPoints[i + 1];
+		k++;
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			cout << triangles[i][j].x << " " << triangles[i][j].y << endl;
+		}
+		cout << endl;
+	}
 }
 
 void f7(int n)
@@ -231,6 +275,8 @@ int main()
 			cout << endl;
 			break;
 		case 6:
+			setPointsToStruct(n);
+			f6(n);
 			break;
 		case 7:
 			readIntSequence(n);
