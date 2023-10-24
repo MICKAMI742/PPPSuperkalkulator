@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 // inicjacja zmiennej pod utworzenie dynamicznej tabliczy intow
@@ -26,11 +27,10 @@ void readIntSequence(int n)
 // funkcja wczytujaca punkty do struktury
 void setPointsToStruct(int n)
 {
-	tabOfPoints = new points[n];
-	for (int i = 0; i < n; i++)
+	tabOfPoints = new points[n / 3];
+	for (int i = 0; i < n / 2; i++)
 	{
-		cin >> tabOfPoints[i].x;
-		cin >> tabOfPoints[i].y;
+		cin >> tabOfPoints[i].x >> tabOfPoints[i].y;
 	}
 }
 
@@ -148,34 +148,27 @@ bool *f5(int n)
 	return tabOfBool;
 }
 
-void f6(int n)
+int f6(int n)
 {
-	points triangles[n][3];
-	for (int i = 0; i < n; i++)
+	vector<vector<points>> triangles;
+	int a, b, c;
+	int s = 0;
+	int areaOfFigure = 0;
+	// podział wielokąta na trojkaty zaczynajac od jednego wierzcholka
+	// działamy tylko dla połowy zakresu n, ponieważ wtedy tablica nie wypełni się nie prawdziwymi punktami
+	for (int i = 1; i < (n / 2) - 1; i++)
 	{
-		for (int j = 0; j < 3; j++)
-		{
-			triangles[i][j].x = 0;
-			triangles[i][j].y = 0;
-		}
+		triangles.push_back({tabOfPoints[0], tabOfPoints[i], tabOfPoints[i + 1]});
 	}
-	int k = 0;
-	for (int i = 1; i < n - 1; i++)
+	for (int i = 0; i < triangles.size(); i++)
 	{
-		triangles[k][0] = tabOfPoints[0];
-		triangles[k][1] = tabOfPoints[i];
-		triangles[k][2] = tabOfPoints[i + 1];
-		k++;
+		a = sqrt(pow(triangles[i][1].x - triangles[i][0].x, 2) + pow(triangles[i][1].y - triangles[i][0].y, 2));
+		b = sqrt(pow(triangles[i][2].x - triangles[i][1].x, 2) + pow(triangles[i][2].y - triangles[i][1].y, 2));
+		c = sqrt(pow(triangles[i][0].x - triangles[i][2].x, 2) + pow(triangles[i][0].y - triangles[i][2].y, 2));
+		s = (a + b + c) / 2;
+		areaOfFigure += sqrt(s * (s - a) * (s - b) * (s - c));
 	}
-
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			cout << triangles[i][j].x << " " << triangles[i][j].y << endl;
-		}
-		cout << endl;
-	}
+	return areaOfFigure;
 }
 
 void f7(int n)
@@ -189,7 +182,7 @@ void f7(int n)
 	int delta = 0;
 	if (a == 0)
 	{
-		delta = pow(c, 2) - 4 * b * d; // obli5czam delte
+		delta = pow(c, 2) - 4 * b * d; // obliczam delte
 		if (delta > 0)
 		{
 			firstX = (-c + sqrt(delta)) / (2 * b);
@@ -276,7 +269,7 @@ int main()
 			break;
 		case 6:
 			setPointsToStruct(n);
-			f6(n);
+			cout << f6(n) << endl;
 			break;
 		case 7:
 			readIntSequence(n);
