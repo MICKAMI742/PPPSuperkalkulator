@@ -160,14 +160,17 @@ int f6(int n)
 	{
 		triangles.push_back({tabOfPoints[0], tabOfPoints[i], tabOfPoints[i + 1]});
 	}
+	// obliczanie dlugosci bokow trojkatow i ich pol
 	for (int i = 0; i < triangles.size(); i++)
 	{
 		a = sqrt(pow(triangles[i][1].x - triangles[i][0].x, 2) + pow(triangles[i][1].y - triangles[i][0].y, 2));
 		b = sqrt(pow(triangles[i][2].x - triangles[i][1].x, 2) + pow(triangles[i][2].y - triangles[i][1].y, 2));
 		c = sqrt(pow(triangles[i][0].x - triangles[i][2].x, 2) + pow(triangles[i][0].y - triangles[i][2].y, 2));
 		s = (a + b + c) / 2;
-		areaOfFigure += sqrt(s * (s - a) * (s - b) * (s - c));
+		areaOfFigure += ceil(sqrt(s * (s - a) * (s - b) * (s - c)));
 	}
+	// czyscimy tablice, aby nie pozostawaly w niej stare dane
+	triangles.clear();
 	return areaOfFigure;
 }
 
