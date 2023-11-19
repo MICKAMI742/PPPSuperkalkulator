@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <string>
 
 using namespace std;
 // inicjacja zmiennej pod utworzenie dynamicznej tabliczy intow
@@ -47,21 +48,26 @@ int f0(int n, int i)
 		}
 	}
 
-	return minIndex;
+	return minIndex + 1;
 }
 
 // funkcja sortujaca wejsciowy ciag liczb
 // sortowanie przez wybór
 void f1(int n)
 {
-	int minIndex;
 	int pom;
 	for (int i = 0; i < n; i++)
 	{
-		minIndex = f0(n, i + 1);
-		pom = tabOfNumbers[i];
-		tabOfNumbers[i] = tabOfNumbers[minIndex];
-		tabOfNumbers[minIndex] = pom;
+		swap(tabOfNumbers[i], tabOfNumbers[f0(n, i + 1) - 1]);
+	}
+	int start = 0;
+	int end = n - 1;
+	// odwracam tablice, ponieważ sortuje się ona rosnąco jeśli wybieramy najmniejszy element
+	while (start < end)
+	{
+		swap(tabOfNumbers[start], tabOfNumbers[end]);
+		start++;
+		end--;
 	}
 	for (int i = 0; i < n; i++)
 	{
@@ -77,7 +83,7 @@ int f2(int n)
 	int norm = 0;
 	for (int i = 0; i < n; i++)
 	{
-		norm += pow(tabOfNumbers[i], 2);
+		norm += tabOfNumbers[i] * tabOfNumbers[i];
 	}
 	norm = sqrt(norm);
 	return norm;
@@ -105,12 +111,13 @@ int f3(int n)
 // funkcja odwracajaca tablice
 void f4(int n)
 {
-	int pom;
-	for (int i = 0; i < n / 2; i++)
+	int start = 0;
+	int end = n - 1;
+	while (start < end)
 	{
-		pom = tabOfNumbers[i];
-		tabOfNumbers[i] = tabOfNumbers[n - i - 1];
-		tabOfNumbers[n - i - 1] = pom;
+		swap(tabOfNumbers[start], tabOfNumbers[end]);
+		start++;
+		end--;
 	}
 	for (int i = 0; i < n; i++)
 	{
@@ -167,6 +174,7 @@ int f6(int n)
 		b = sqrt(pow(triangles[i][2].x - triangles[i][1].x, 2) + pow(triangles[i][2].y - triangles[i][1].y, 2));
 		c = sqrt(pow(triangles[i][0].x - triangles[i][2].x, 2) + pow(triangles[i][0].y - triangles[i][2].y, 2));
 		s = (a + b + c) / 2;
+		// pierwiastek musi byc zaokraglany w gore, poniewaz zwraca mniejsza wartosc niz jest rzeczywiscie
 		areaOfFigure += ceil(sqrt(s * (s - a) * (s - b) * (s - c)));
 	}
 	// czyscimy tablice, aby nie pozostawaly w niej stare dane
@@ -176,6 +184,7 @@ int f6(int n)
 
 void f7(int n)
 {
+	vector<double> tabOfSolutions;
 	int a = tabOfNumbers[0];
 	int b = tabOfNumbers[1];
 	int c = tabOfNumbers[2];
@@ -204,12 +213,12 @@ void f7(int n)
 	}
 }
 
-int f8(int n)
+unsigned long long f8(int n)
 {
-	int result = 0;
+	unsigned long long result = 0;
 	for (int i = 1; i <= tabOfNumbers[n - 1]; i++)
 	{
-		result += i * pow(i + 1, 2);
+		result += i * (i + 1) * (i + 1);
 	}
 	return result;
 }
