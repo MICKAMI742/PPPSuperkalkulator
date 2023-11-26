@@ -91,13 +91,18 @@ int f2(int n)
 // funkcja obliczajaca i zwracajaca wartosc odchylenia standardowego
 int f3(int n)
 {
-	int standardDeviation = 0;
+	float standardDeviation = 0;
 	for (int i = 0; i < n; i++)
 	{
-		standardDeviation += f2(n);
+		standardDeviation += tabOfNumbers[i];
 	}
 	standardDeviation /= n;
-	standardDeviation = sqrt(standardDeviation) - 1;
+	float difference = 0;
+	for (int i = 0; i < n; i++)
+	{
+		difference += (tabOfNumbers[i] - standardDeviation) * (tabOfNumbers[i] - standardDeviation);
+	}
+	standardDeviation = sqrt(difference / n);
 	return standardDeviation;
 }
 
@@ -285,7 +290,5 @@ int main()
 			break;
 		}
 	};
-	free(tabOfNumbers);
-	free(tabOfPoints);
 	return 0;
 }
