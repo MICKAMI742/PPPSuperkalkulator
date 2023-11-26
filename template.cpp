@@ -42,12 +42,11 @@ int f0(int n, int i)
 	int minIndex = i - 1;
 	for (i; i < n; i++)
 	{
-		if (tabOfNumbers[i] < tabOfNumbers[minIndex])
+		if (tabOfNumbers[i] <= tabOfNumbers[minIndex])
 		{
 			minIndex = i;
 		}
 	}
-
 	return minIndex + 1;
 }
 
@@ -55,7 +54,6 @@ int f0(int n, int i)
 // sortowanie przez wybór
 void f1(int n)
 {
-	int pom;
 	for (int i = 0; i < n; i++)
 	{
 		swap(tabOfNumbers[i], tabOfNumbers[f0(n, i + 1) - 1]);
@@ -69,6 +67,7 @@ void f1(int n)
 		start++;
 		end--;
 	}
+	cout << endl;
 	for (int i = 0; i < n; i++)
 	{
 		cout << tabOfNumbers[i] << " ";
@@ -92,13 +91,7 @@ int f2(int n)
 // funkcja obliczajaca i zwracajaca wartosc odchylenia standardowego
 int f3(int n)
 {
-	int avg = 0;
 	int standardDeviation = 0;
-	for (int i = 0; i < n; i++)
-	{
-		avg += tabOfNumbers[i];
-	}
-	avg /= n;
 	for (int i = 0; i < n; i++)
 	{
 		standardDeviation += f2(n);
@@ -157,7 +150,7 @@ bool *f5(int n)
 
 int f6(int n)
 {
-	vector<vector<points>> triangles;
+	vector<vector<points>> triangles{0};
 	int a, b, c;
 	int s = 0;
 	int areaOfFigure = 0;
@@ -177,14 +170,11 @@ int f6(int n)
 		// pierwiastek musi byc zaokraglany w gore, poniewaz zwraca mniejsza wartosc niz jest rzeczywiscie
 		areaOfFigure += ceil(sqrt(s * (s - a) * (s - b) * (s - c)));
 	}
-	// czyscimy tablice, aby nie pozostawaly w niej stare dane
-	triangles.clear();
 	return areaOfFigure;
 }
 
 void f7(int n)
 {
-	vector<double> tabOfSolutions;
 	int a = tabOfNumbers[0];
 	int b = tabOfNumbers[1];
 	int c = tabOfNumbers[2];
@@ -213,13 +203,11 @@ void f7(int n)
 	}
 }
 
-unsigned long long f8(int n)
+long long f8(int n)
 {
-	unsigned long long result = 0;
-	for (int i = 1; i <= tabOfNumbers[n - 1]; i++)
-	{
-		result += i * (i + 1) * (i + 1);
-	}
+	long long result = 0;
+	long long maxVal = tabOfNumbers[n - 1];
+	result = maxVal * (maxVal + 1) * (3 * maxVal * (maxVal + 1) + 8 * maxVal + 10) / 12;
 	return result;
 }
 
@@ -252,7 +240,7 @@ int main()
 		{
 		case 0:
 			readIntSequence(n);
-			cout << f0(n, 1) << endl;
+			f0(n, 1);
 			break;
 		case 1:
 			readIntSequence(n);
@@ -297,5 +285,7 @@ int main()
 			break;
 		}
 	};
+	free(tabOfNumbers);
+	free(tabOfPoints);
 	return 0;
 }
