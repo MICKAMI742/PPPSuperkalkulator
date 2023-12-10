@@ -216,7 +216,7 @@ long long f8(int n)
 	return result;
 }
 
-int f9(int n)
+int f9(int n, int number)
 {
 	int i = 31;
 	string binaryNumber;
@@ -224,7 +224,7 @@ int f9(int n)
 	while (i--)
 	{
 		// zamieniam liczbe int na liczbe w binarnym systemie i zapisuje jako string powstaly ciag
-		binaryNumber += to_string((tabOfNumbers[0] >> i) & 1);
+		binaryNumber += to_string((number >> i) & 1);
 	}
 	for (int i = 0; i < binaryNumber.size(); i++)
 	{
@@ -286,7 +286,12 @@ int main()
 			break;
 		case 9:
 			readIntSequence(n);
-			cout << f9(n) << endl;
+			string stringResult = "";
+			for (int i = 0; i < n; i++)
+			{
+				stringResult += to_string(f9(n, tabOfNumbers[i])) + " ";
+			}
+			cout << stringResult << endl;
 			break;
 		}
 	};
