@@ -6,6 +6,7 @@
 using namespace std;
 // inicjacja zmiennej pod utworzenie dynamicznej tabliczy intow
 int *tabOfNumbers;
+vector<string> tabOfPositions;
 
 // inicjacja struktury służącej do zadania 6
 struct points
@@ -35,16 +36,45 @@ void setPointsToStruct(int n)
 	}
 }
 
+int minimal(int n)
+{
+	int minVar = tabOfNumbers[0];
+	for (int i = 1; i < n; i++)
+	{
+		if (tabOfNumbers[i] < minVar)
+		{
+			minVar = tabOfNumbers[i];
+		}
+	}
+	return minVar;
+}
+
 // funkcja zwracajaca pozycje ktore zawieraja najmniejsze wartosci w ciagu
 // f0(int n - wielkosc tablicy, int i - index od ktorego zaczynam przeszukiwanie tablicy)
-int f0(int n, int i)
+int f0(int n, int i, int minimal)
 {
 	int minIndex = i - 1;
+	string resultString = "";
+	if (n == 1)
+	{
+		cout << 1;
+	}
+	if (tabOfNumbers[0] <= tabOfNumbers[i] && tabOfNumbers[0] == minimal)
+	{
+		tabOfPositions.push_back(to_string(minIndex + 1) + " ");
+	}
 	for (i; i < n; i++)
 	{
+		resultString = "";
 		if (tabOfNumbers[i] <= tabOfNumbers[minIndex])
 		{
 			minIndex = i;
+			if (tabOfNumbers[i] == minimal)
+			{
+				minIndex = i;
+				resultString += to_string(minIndex + 1) + " ";
+			}
+			tabOfPositions.push_back(resultString);
 		}
 	}
 	return minIndex + 1;
@@ -56,7 +86,7 @@ void f1(int n)
 {
 	for (int i = 0; i < n; i++)
 	{
-		swap(tabOfNumbers[i], tabOfNumbers[f0(n, i + 1) - 1]);
+		swap(tabOfNumbers[i], tabOfNumbers[f0(n, i + 1, minimal(n)) - 1]);
 	}
 	int start = 0;
 	int end = n - 1;
@@ -216,11 +246,11 @@ long long f8(int n)
 	return result;
 }
 
-int f9(int n, int number)
+unsigned int f9(int n, unsigned int number)
 {
-	int i = 31;
+	unsigned int i = 31;
 	string binaryNumber;
-	int bitsCounter = 0;
+	unsigned int bitsCounter = 0;
 	while (i--)
 	{
 		// zamieniam liczbe int na liczbe w binarnym systemie i zapisuje jako string powstaly ciag
@@ -245,7 +275,13 @@ int main()
 		{
 		case 0:
 			readIntSequence(n);
-			f0(n, 1);
+			f0(n, 1, minimal(n));
+			for (auto x : tabOfPositions)
+			{
+				cout << x;
+			}
+			tabOfPositions.clear();
+			cout << endl;
 			break;
 		case 1:
 			readIntSequence(n);
