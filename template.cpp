@@ -154,33 +154,38 @@ void f4(int n)
 	cout << endl;
 }
 
-bool *f5(int n)
+bool f5(int number)
 {
-	bool *tabOfBool = new bool(n);
-	// wypelnia pusta tablice wartosciami boolowymi, zeby zapobiec przed artefaktami w pamieci
-	for (int i = 0; i < n; i++)
-	{
-		tabOfBool[i] = 0;
-	}
-	// petla sprawdzajaca czy liczba jest pierwsza
-	for (int i = 0; i < n; i++)
-	{
-		if (tabOfNumbers[i] == 2)
-		{
-			tabOfBool[i] = 1;
-			continue;
-		}
+	std::vector<bool> isPrime(number + 1, true);
+	std::vector<int> primes;
 
-		for (int j = 2; j <= sqrt(tabOfNumbers[i]); j++)
+	for (int p = 2; p * p <= number; ++p)
+	{
+		if (isPrime[p])
 		{
-			if (tabOfNumbers[i] % j == 0)
+			for (int i = p * p; i <= number; i += p)
 			{
-				tabOfBool[i] = 0;
+				isPrime[i] = false;
 			}
-			tabOfBool[i] = 1;
 		}
 	}
-	return tabOfBool;
+
+	for (int p = 2; p <= number; ++p)
+	{
+		if (isPrime[p])
+		{
+			primes.push_back(p);
+		}
+	}
+
+	if (number == primes[primes.size() - 1])
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 int f6(int n)
@@ -303,8 +308,7 @@ int main()
 			readIntSequence(n);
 			for (int i = 0; i < n; i++)
 			{
-				bool *array = f5(n);
-				cout << array[i] << " ";
+				cout << f5(tabOfNumbers[i]) << " ";
 			}
 			cout << endl;
 			break;
