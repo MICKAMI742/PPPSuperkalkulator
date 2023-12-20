@@ -6,6 +6,7 @@
 using namespace std;
 // inicjacja zmiennej pod utworzenie dynamicznej tabliczy intow
 int *tabOfNumbers;
+double *tabOfDbNumbers;
 vector<string> tabOfPositions;
 
 // inicjacja struktury służącej do zadania 6
@@ -23,6 +24,15 @@ void readIntSequence(int n)
 	for (int i = 0; i < n; i++)
 	{
 		cin >> tabOfNumbers[i];
+	}
+}
+
+void readDoubleSequence(int n)
+{
+	tabOfDbNumbers = new double[n];
+	for (int i = 0; i < n; i++)
+	{
+		cin >> tabOfDbNumbers[i];
 	}
 }
 
@@ -213,33 +223,26 @@ int f6(int n)
 	return areaOfFigure;
 }
 
-void f7(int n)
+void f7(double a, double b, double c, double d)
 {
-	int a = tabOfNumbers[0];
-	int b = tabOfNumbers[1];
-	int c = tabOfNumbers[2];
-	int d = tabOfNumbers[3];
-	int firstX = 0;
-	int secondX = 0;
-	int delta = 0;
 	if (a == 0)
 	{
-		delta = pow(c, 2) - 4 * b * d; // obliczam delte
+		double delta = c * c - 4 * b * d;
 		if (delta > 0)
 		{
-			firstX = (-c + sqrt(delta)) / (2 * b);
-			secondX = (-c - sqrt(delta)) / (2 * b);
-			cout << firstX << endl;
-			cout << secondX << endl;
+			double x1 = (-c + sqrt(delta)) / (2 * b);
+			double x2 = (-c - sqrt(delta)) / (2 * b);
+			cout << x2 << " " << x1 << endl;
 		}
-		if (delta == 0)
+		else if (delta == 0)
 		{
-			firstX = -c / (2 * b);
-			cout << firstX << endl;
+			int x = -c / (2 * b);
+			cout << x << endl;
 		}
-	}
-	else
-	{
+		else
+		{
+			cout << "Brak rozwiązań" << endl;
+		}
 	}
 }
 
@@ -317,8 +320,8 @@ int main()
 			cout << f6(n) << endl;
 			break;
 		case 7:
-			readIntSequence(n);
-			f7(n);
+			readDoubleSequence(n);
+			f7(tabOfDbNumbers[0], tabOfDbNumbers[1], tabOfDbNumbers[2], tabOfDbNumbers[3]);
 			break;
 		case 8:
 			readIntSequence(n);
