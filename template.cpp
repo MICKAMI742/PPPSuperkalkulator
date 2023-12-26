@@ -137,14 +137,7 @@ int f3(int n)
 		standardDeviation += tabOfNumbers[i];
 	}
 	standardDeviation /= n;
-	// float difference = 0;
-	// for (int i = 0; i < n; i++)
-	// {
-	// 	difference += (tabOfNumbers[i] - standardDeviation) * (tabOfNumbers[i] - standardDeviation);
-	// }
-	// standardDeviation = sqrt(difference / n);
-	int result = f2(n, n, standardDeviation);
-	return result;
+	return f2(n, n, standardDeviation);
 }
 
 // funkcja odwracajaca tablice
