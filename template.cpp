@@ -116,16 +116,16 @@ void f1(int n)
 }
 
 // funkcja znajdujaca wartosc normy euklidesowej
-int f2(int n)
+int f2(int n, int divider, float diff)
 {
 	// int norm = sqrt(pow(x1, 2) + pow(x2, 2));
-	int norm = 0;
+	float norm = 0;
 	for (int i = 0; i < n; i++)
 	{
-		norm += tabOfNumbers[i] * tabOfNumbers[i];
+		norm += (tabOfNumbers[i] - diff) * (tabOfNumbers[i] - diff);
 	}
-	norm = sqrt(norm);
-	return norm;
+	norm = sqrt(norm / divider);
+	return floor(norm);
 }
 
 // funkcja obliczajaca i zwracajaca wartosc odchylenia standardowego
@@ -137,13 +137,14 @@ int f3(int n)
 		standardDeviation += tabOfNumbers[i];
 	}
 	standardDeviation /= n;
-	float difference = 0;
-	for (int i = 0; i < n; i++)
-	{
-		difference += (tabOfNumbers[i] - standardDeviation) * (tabOfNumbers[i] - standardDeviation);
-	}
-	standardDeviation = sqrt(difference / n);
-	return standardDeviation;
+	// float difference = 0;
+	// for (int i = 0; i < n; i++)
+	// {
+	// 	difference += (tabOfNumbers[i] - standardDeviation) * (tabOfNumbers[i] - standardDeviation);
+	// }
+	// standardDeviation = sqrt(difference / n);
+	int result = f2(n, n, standardDeviation);
+	return result;
 }
 
 // funkcja odwracajaca tablice
@@ -303,7 +304,7 @@ int main()
 			break;
 		case 2:
 			readIntSequence(n);
-			cout << f2(n) << endl;
+			cout << f2(n, 1, 0) << endl;
 			break;
 		case 3:
 			readIntSequence(n);
